@@ -1,0 +1,95 @@
+﻿@page "/advanced-search"
+@using StaffMgtBlazorApp.Models
+@using StaffMgtBlazorApp.Services
+@using StaffMgtBlazorApp.Utilities
+@inject IStaffService StaffService
+@inject ExportService ExportService
+@inject IJSRuntime JSRuntime
+
+<h3>Advanced Search</h3>
+
+<EditForm Model="searchModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="staffId">Staff ID</label>
+        <InputText id="staffId" class="form-control" @bind-Value="searchModel.StaffId" />
+    </div>
+    <div class="form-group">
+        <label for="gender">Gender</label>
+        <InputSelect id="gender" class="form-control" @bind-Value="searchModel.Gender">
+            <option value="">Select Gender</option>
+            <option value="1">Male</option>
+            <option value="2">Female</option>
+        </InputSelect>
+    </div>
+    <div class="form-group">
+        <label for="birthdayFrom">Birthday From</label>
+        <InputDate id="birthdayFrom" class="form-control" @bind-Value="searchModel.BirthdayFrom" />
+    </div>
+    <div class="form-group">
+        <label for="birthdayTo">Birthday To</label>
+        <InputDate id="birthdayTo" class="form-control" @bind-Value="searchModel.BirthdayTo" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+</EditForm>
+
+<button @onclick="ExportToExcel">Export to Excel</button>
+<button @onclick="ExportToPdf">Export to PDF</button>
+
+<table class="table mt-4" hidden="@(!results.Any())">
+    <thead>
+        <tr>
+            <th>Staff ID</th>
+            <th>Full Name</th>
+            <th>Birthday</th>
+            <th>Gender</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var staff in results)
+        {
+            <tr>
+                <td>@staff.StaffId</td>
+                <td>@staff.FullName</td>
+                <td>@staff.Birthday.ToShortDateString()</td>
+                <td>@(staff.Gender == 1 ? "Male" : "Female")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private SearchModel searchModel = new SearchModel();
+    private List<StaffDto> results = new List<StaffDto>();
+
+    private async Task HandleValidSubmit()
+    {
+        // Filter staff based on search criteria
+        results = (await StaffService.GetStaffsAsync()).ToList();
+    }
+
+    private async Task ExportToExcel()
+    {
+        var bytes = await ExportService.ExportToExcelAsync(results);
+        using var stream = new MemoryStream(bytes);
+        await FileUtil.SaveAs("Staffs.xlsx", stream, JSRuntime);
+    }
+
+    private async Task ExportToPdf()
+    {
+        var bytes = await ExportService.ExportToPdfAsync(results);
+        using var stream = new MemoryStream(bytes);
+        await FileUtil.SaveAs("Staffs.pdf", stream, JSRuntime);
+    }
+
+    private class SearchModel
+    {
+        public string StaffId { get; set; }
+        public int? Gender { get; set; }
+        public DateTime? BirthdayFrom { get; set; }
+        public DateTime? BirthdayTo { get; set; }
+    }
+}

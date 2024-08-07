@@ -1,0 +1,90 @@
+﻿@page "/staff-list"
+@using StaffMgtBlazorApp.Models
+@using StaffMgtBlazorApp.Services
+@inject IStaffService StaffService
+@inject NavigationManager Navigation
+
+<h3>Staff List</h3>
+
+@if (staffs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <form>
+        <p>
+
+            Advance Search: <input type="text" asp-for="SearchString" />
+            <input type="submit" value="Search" />
+        </p>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Staff ID</th>
+                <th>Full Name</th>
+                <th>Birthday</th>
+                <th>Gender</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var staff in staffs)
+            {
+                <tr>
+                    <td>@staff.StaffId</td>
+                    <td>@staff.FullName</td>
+                    <td>@staff.Birthday.ToShortDateString()</td>
+                    <td>@(staff.Gender == 1 ? "Male" : "Female")</td>
+                    <td>
+                        <button @onclick="() => EditStaff(staff.StaffId)" class="btn btn-primary">Edit</button>
+                        <button @onclick="() => DeleteStaff(staff.StaffId)" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button @onclick="AddStaff" class="btn btn-success">Add New Staff</button>
+}
+
+@code {
+    private List<StaffDto> staffs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            staffs = (await StaffService.GetStaffsAsync()).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error loading staff: {ex.Message}");
+            // Optionally, show an error message to the user
+        }
+    }
+
+    private async Task AddStaff()
+    {
+        Navigation.NavigateTo("/addeditstaff");
+    }
+
+    private async Task EditStaff(string staffId)
+    {
+        Navigation.NavigateTo($"/addeditstaff/{staffId}");
+    }
+
+    private async Task DeleteStaff(string staffId)
+    {
+        try
+        {
+            await StaffService.DeleteStaffAsync(staffId);
+            staffs = (await StaffService.GetStaffsAsync()).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error deleting staff: {ex.Message}");
+            // Optionally, show an error message to the user
+        }
+    }
+}

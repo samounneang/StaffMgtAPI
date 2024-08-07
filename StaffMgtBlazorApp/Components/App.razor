@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="StaffMgtBlazorApp.styles.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <script src="js/site.js"></script>
+    @* <script>
+        function downloadFile(fileName, fileUrl) {
+            const a = document.createElement('a');
+            a.href = fileUrl;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script> *@
+    <HeadOutlet />
+</head>
+
+<body>
+    <Routes @rendermode=RenderMode.InteractiveServer />
+   @*  <Routes /> *@
+    <app>
+        <component type="typeof(App)" render-mode="ServerPrerendered" />
+    </app>
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            <a href="" class="reload">Reload</a>
+            <a class="dismiss"></a>
+        </environment>
+    </div>
+    <script src="_framework/blazor.web.js"></script>
+</body>
+
+</html>

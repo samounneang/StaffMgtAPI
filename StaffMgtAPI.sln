@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffMgtAPI", "StaffMgtApi\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffMgtApiTest", "StaffMgtApiTest\StaffMgtApiTest.csproj", "{A08E00AD-8E80-4DA3-82B8-A4B4288470E8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffMgtBlazorApp", "StaffMgtBlazorApp\StaffMgtBlazorApp.csproj", "{7909964F-0753-4462-B0B6-077124F783C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A08E00AD-8E80-4DA3-82B8-A4B4288470E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A08E00AD-8E80-4DA3-82B8-A4B4288470E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A08E00AD-8E80-4DA3-82B8-A4B4288470E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7909964F-0753-4462-B0B6-077124F783C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7909964F-0753-4462-B0B6-077124F783C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7909964F-0753-4462-B0B6-077124F783C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7909964F-0753-4462-B0B6-077124F783C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
