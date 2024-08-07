@@ -27,7 +27,7 @@ jobs:
         run: dotnet build StaffMgtAPI.sln --no-restore
   
       - name: Run tests
-        run: dotnet test ../StaffMgtApiUnitTest/StaffMgtApiUnitTest.csproj --no-build --verbosity normal
+        run: dotnet test StaffMgtApiTest/StaffMgtApiTest.csproj --no-build --verbosity normal
   
   deploy:
     runs-on: windows-latest
