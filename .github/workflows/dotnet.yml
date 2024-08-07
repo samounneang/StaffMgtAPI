@@ -27,7 +27,8 @@ jobs:
         run: dotnet build StaffMgtAPI.sln --no-restore
   
       - name: Run tests
-        run: dotnet test StaffManagementTest/StaffManagementTest.csproj --no-build --verbosity normal  
+        run: dotnet test StaffMgtAPI/StaffMgtApiUnitTest/StaffMgtApiUnitTest.csproj --no-build --verbosity normal
+  
   deploy:
     runs-on: windows-latest
     needs: build
@@ -40,14 +41,14 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '8.0.x'  # Ensure this matches your .NET Core version
+          dotnet-version: '8.0.x'
           
       - name: Publish
-        run: dotnet publish StaffMgtAPI.csproj -c Release -o publish_output
+        run: dotnet publish StaffMgtAPI/StaffMgtAPI.csproj -c Release -o publish_output
 
- #     - name: Deploy to Azure Web App
- #       uses: azure/webapps-deploy@v2
- #      with:
- #         app-name: 'YourWebAppName'  # Update with your Azure Web App name
- #          publish-profile: ${{ secrets.AzureWebAppPublishProfile }}  # Set this secret in your GitHub repository
- #         package: publish_output
+#     - name: Deploy to Azure Web App
+#       uses: azure/webapps-deploy@v2
+#       with:
+#         app-name: 'YourWebAppName'  # Update with your Azure Web App name
+#         publish-profile: ${{ secrets.AzureWebAppPublishProfile }}  # Set this secret in your GitHub repository
+#         package: publish_output
