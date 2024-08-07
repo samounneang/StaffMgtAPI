@@ -45,10 +45,3 @@ jobs:
           
       - name: Publish
         run: dotnet publish StaffMgtAPI/StaffMgtAPI.csproj -c Release -o publish_output
-
-#     - name: Deploy to Azure Web App
-#       uses: azure/webapps-deploy@v2
-#       with:
-#         app-name: 'YourWebAppName'  # Update with your Azure Web App name
-#         publish-profile: ${{ secrets.AzureWebAppPublishProfile }}  # Set this secret in your GitHub repository
-#         package: publish_output
