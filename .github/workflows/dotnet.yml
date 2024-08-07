@@ -43,7 +43,7 @@ jobs:
           dotnet-version: '8.0.x'  # Ensure this matches your .NET Core version
           
       - name: Publish
-        run: dotnet publish StaffMgtAPI.csproj -c Release -o publish_output
+        run: dotnet publish StaffMgtAPI/StaffMgtAPI.csproj -c Release -o publish_output
 
  #     - name: Deploy to Azure Web App
  #       uses: azure/webapps-deploy@v2
